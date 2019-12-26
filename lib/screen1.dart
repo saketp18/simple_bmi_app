@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_bmi_app/data/data.dart';
 
 Color activeColor = Color(0xFF1D1F33);
 
 class ResultScreen extends StatelessWidget {
+  final Data data;
+
+  ResultScreen({@required this.data});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,12 +16,16 @@ class ResultScreen extends StatelessWidget {
         title: Text("Results"),
         backgroundColor: Color(0xFF090C22),
       ),
-      body: SafeArea(child: Results()),
+      body: SafeArea(child: Results(data: data)),
     );
   }
 }
 
 class Results extends StatefulWidget {
+  Results({@required this.data});
+
+  final Data data;
+
   @override
   _ResultsState createState() => _ResultsState();
 }
@@ -29,12 +38,14 @@ class _ResultsState extends State<Results> {
       children: <Widget>[
         Expanded(
           flex: 2,
-          child: Text(
-            "Your result",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20.0,
-              color: Colors.white,
+          child: Center(
+            child: Text(
+              "Your result",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 40.0,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
@@ -46,7 +57,27 @@ class _ResultsState extends State<Results> {
               color: activeColor,
             ),
             margin: EdgeInsets.all(16),
-            child: Text("YOUR RESULT"),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                  widget.data.bmi.toStringAsFixed(2),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 65.0,
+                  ),
+                ),
+                Text(
+                  widget.data.getResults(),
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25.0,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Expanded(
@@ -62,12 +93,17 @@ class _ResultsState extends State<Results> {
                 ),
                 color: Color(0xFFEA1556),
               ),
-              child: Center(
-                child: Text(
-                  "CALCULATE",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Center(
+                  child: Text(
+                    "RE CALCULATE BMI",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

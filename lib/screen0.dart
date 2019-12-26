@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:simple_bmi_app/data.dart';
-import 'package:simple_bmi_app/results.dart';
+import 'package:simple_bmi_app/data/data.dart';
+import 'package:simple_bmi_app/screen1.dart';
 import 'package:simple_bmi_app/views/card_views.dart';
 
 void main() => runApp(MyApp());
@@ -300,8 +300,12 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 var bmi = data.calculateBMI();
                 print(bmi.toStringAsFixed(2));
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ResultScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ResultScreen(
+                              data: data,
+                            )));
               },
               child: Container(
                 height: 65.0,
